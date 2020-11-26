@@ -1,0 +1,81 @@
+<project name="TrabalhoProg3_2017_1" default="compile" basedir=".">
+     <description>Arquivo de build do trabalho de Prog3, 2017/1.</description>
+     <!-- Propriedades do build. -->
+     <property name="src" location="src" />
+     <property name="bin" location="bin" />
+     <property name="mainClass" value="trabalho.Main" />
+     <!-- Inicialização. -->
+     <target name="init" description="Inicializa as estruturas necessárias.">
+<tstamp/>
+          <mkdir dir="${bin}" />
+     </target>
+     <!-- Compilação. -->
+     <target name="compile" depends="init" description="Compila o código-
+fonte.">
+          <javac includeantruntime="false" srcdir="${src}" destdir="${bin}" />
+     </target>
+     <!-- Execução normal. -->
+     <target name="run" depends="compile" description="Executa o programa
+principal, em modo normal.">
+          <java classname="${mainClass}">
+              <arg value="-d" />
+              <arg value="docentes.csv" />
+              <arg value="-v" />
+              <arg value="veiculos.csv" />
+              <arg value="-p" />
+              <arg value="publicacoes.csv" />
+              <arg value="-q" />
+              <arg value="qualis.csv" />
+              <arg value="-r" />
+              <arg value="regras.csv" />
+              <arg value="-a" />
+              <arg value="2017" />
+              <classpath>
+                   <pathelement path="${bin}" />
+              </classpath>
+          </java>
+     </target>
+
+     <!-- Execução somente leitura. -->
+     <target name="run-read-only" depends="compile" description="Executa o
+programa principal, em modo somente leitura.">
+          <java classname="${mainClass}">
+              <arg value="-d" />
+              <arg value="docentes.csv" />
+              <arg value="-v" />
+              <arg value="veiculos.csv" />
+              <arg value="-p" />
+              <arg value="publicacoes.csv" />
+              <arg value="-q" />
+              <arg value="qualis.csv" />
+              <arg value="-r" />
+              <arg value="regras.csv" />
+              <arg value="-a" />
+              <arg value="2017" />
+              <arg value="--read-only" />
+              <classpath>
+                   <pathelement path="${bin}" />
+              </classpath>
+          </java>
+     </target>
+
+     <!-- Execução somente escrita. -->
+     <target name="run-write-only" depends="compile" description="Executa o
+programa principal, em modo somente escrita.">
+          <java classname="${mainClass}">
+              <arg value="--write-only" />
+              <classpath>
+                   <pathelement path="${bin}" />
+              </classpath>
+          </java>
+     </target>
+
+     <!-- Limpeza. -->
+     <target name="clean" description="Limpa o projeto, deixando apenas o
+código-fonte." >
+          <delete dir="${bin}"/>
+          <delete><fileset dir="." includes="*.txt"/></delete>
+          <delete><fileset dir="." includes="*.csv"/></delete>
+          <delete><fileset dir="." includes="*.dat"/></delete>
+     </target>
+</project>
